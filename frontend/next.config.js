@@ -3,13 +3,15 @@ const nextConfig = {
   reactStrictMode: true,
 };
 
-if (!process.env.NEXT_PUBLIC_API_URL) {
-  nextConfig.rewrites = async () => [
-    {
-      source: "/api/:path*",
-      destination: "http://localhost:8000/api/:path*",
-    },
-  ];
-}
+const proxyTarget = process.env.API_PROXY_URL
+  ? `http://${process.env.API_PROXY_URL}`
+  : "http://localhost:8000";
+
+nextConfig.rewrites = async () => [
+  {
+    source: "/api/:path*",
+    destination: `${proxyTarget}/api/:path*`,
+  },
+];
 
 module.exports = nextConfig;
