@@ -1,7 +1,6 @@
 databases:
   - name: resume-db
     databaseName: resume_screening
-    user: postgres
     plan: free
 
 services:
@@ -21,11 +20,6 @@ services:
           property: connectionString
       - key: UPLOAD_DIR
         value: /tmp/uploads
-      - key: CORS_ORIGINS
-        fromService:
-          name: resume-screening-frontend
-          type: web
-          property: url
 
   - type: web
     name: resume-screening-frontend
@@ -40,4 +34,4 @@ services:
         fromService:
           name: resume-screening-backend
           type: web
-          property: url
+          property: hostport
