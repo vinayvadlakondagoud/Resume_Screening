@@ -34,4 +34,4 @@ services:
         fromService:
           name: resume-screening-backend
           type: web
-          property: hostport
+          property: host

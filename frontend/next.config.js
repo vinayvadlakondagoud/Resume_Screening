@@ -4,7 +4,7 @@ const nextConfig = {
 };
 
 const proxyTarget = process.env.API_PROXY_URL
-  ? `http://${process.env.API_PROXY_URL}`
+  ? `https://${process.env.API_PROXY_URL}`
   : "http://localhost:8000";
 
 nextConfig.rewrites = async () => [
