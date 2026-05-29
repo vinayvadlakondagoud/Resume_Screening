@@ -34,4 +34,4 @@ services:
         fromService:
           name: resume-screening-backend
           type: web
-          property: host
+          envVarKey: RENDER_EXTERNAL_URL
