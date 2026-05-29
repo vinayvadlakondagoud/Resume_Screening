@@ -1,0 +1,9 @@
+node_modules/
+.next/
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+.env
+*.db
+uploads/

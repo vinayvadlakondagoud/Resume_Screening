@@ -1,0 +1,43 @@
+databases:
+  - name: resume-db
+    databaseName: resume_screening
+    user: postgres
+    plan: free
+
+services:
+  - type: web
+    name: resume-screening-backend
+    env: python
+    rootDir: backend
+    plan: free
+    region: oregon
+    healthCheckPath: /health
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: resume-db
+          property: connectionString
+      - key: UPLOAD_DIR
+        value: /tmp/uploads
+      - key: CORS_ORIGINS
+        fromService:
+          name: resume-screening-frontend
+          type: web
+          property: url
+
+  - type: web
+    name: resume-screening-frontend
+    env: node
+    rootDir: frontend
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: resume-screening-backend
+          type: web
+          property: url
